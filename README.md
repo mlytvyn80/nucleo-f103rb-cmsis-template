@@ -34,40 +34,27 @@ A toolchain configuration. You have to adapt this to your system and ARM compile
 
 ## Building
 
-As you can see I use CMake to generate all necessary build files. If you don't have it installed, never were a better time to do so. You also need to install the [ARM GCC toolchain](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads). I use version **6 2017 Q2 Update**, because newer versions produced weird compilation errors, and that's an issue experienced by a lot of programmers.
+As you can see I use CMake to generate all necessary build files. If you don't have it installed, never were a better time to do so. 
+You also need to install the ARM GCC toolchain:
 
-### Windows
+```
+sudo apt install gcc-arm-none-eabi
+```
+Install build dependencies:
 
-To build this project on Windows I use MinGW, because Windows doesn't support `make` command natively (what a surprise). I didn't test configuring a CMake build system with a different generator, but you can try to. CMake for Windows has quite a lot of defined generators, so you can use *Visual Studio*, *Code Blocks*, *Eclipse* and more. Choose the best for you. If you decide to use MinGW, you have to install it.
+```
+sudo apt install cmake build-essential
+```
+Install OpenOCD to be able to flash the device:
 
-Remember to edit the `arm.cmake` file and set a valid path pointing to a directory with the ARM toolchain. 
+```
+sudo apt install openocd
+```
 
-When everything is installed, create a `build` directory in root of this project, `cd` to it and run the below command:
+Create a `build` directory inside of this project, and from the inside of it execute the following command:
 
-`C:\Users\Foo\nucleo-f103rb-cmsis-template\build> cmake -G "MinGW Makefiles" ..`
+`cmake ..`
 
-If everything is properly configured, you shouldn't see any errors. If they are, then... Well... Annihilate them! Now when CMake did its job, it's time to build the binary:
 
-`C:\Users\Foo\nucleo-f103rb-cmsis-template\build> mingw32-make all`
-
-> I have `mingw32-make.exe` in PATH so I can execute it from everywhere.
-
-When everything went right, you should see your binary built in `build` directory. Its name will be the same as the project's name.
-
-If you have OpenOCD installed and available in PATH, you can also run:
-
-`C:\Users\Foo\nucleo-f103rb-cmsis-template\build> mingw32-make program`
-
-This will program your board through ST-Link. You can also use ST-Link utility to manually program the device.
-
-### Linux
-
-The process of creating a building environment for Linux is similar to Window (thanks to CMake). You also need CMake (which can be obtained by `apt-get`) and of course ARM toolchain. If you can't invoke `make` command that means you also need to install `build-essential` package.
-
-Before building anything, edit `arm.cmake` file and  make sure that toolchain path matches the location of toolchain directory on your machine. If yes, create a `build` directory inside of this project, and from the inside of it execute the following command:
-
-`cmake -G "Unix Makefiles" ..`
-
-Sometimes it might happen that the first invocation of the above command will produced an error saying that GCC couldn't compile a simple test code. If you get something like that, try again and it should work. I don't know why, but the first execution fails, and consecutive works properly.
-
-If CMake generated all necessary files, simply run `make all` and it should compile final binary. If you have OpenOCD in PATH, you can also use `make program` command to program your device.
+If CMake generated all necessary files, simply run `make all` and it should compile final binary. 
+Use `make program` command to program your device.

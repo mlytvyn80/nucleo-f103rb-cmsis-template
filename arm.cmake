@@ -3,7 +3,7 @@ set(CMAKE_SYSTEM_PROCESSOR "arm")
 
 # Adapt this to a valid toolchain location
 if (UNIX)
-set(tools "/opt/gcc-arm-none-eabi-6-2017-q2-update")
+set(tools "/usr")
 set(suffix "")
 endif (UNIX)
 
